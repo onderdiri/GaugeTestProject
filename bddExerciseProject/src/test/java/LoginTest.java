@@ -1,3 +1,4 @@
+import com.thoughtworks.gauge.Gauge;
 import com.thoughtworks.gauge.Step;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -53,18 +54,15 @@ public class LoginTest {
     @Step("Validate <https://www.bilyoner.com> opened on browser")
     public void validateURL(String url) throws Exception {
 
-        //driver = new FirefoxDriver();
-        //driver.get(url);
         setUp(url);
         String currentUrl = driver.getCurrentUrl();
-        System.out.println("İSTENİLEN URL>>>" + url);
-        System.out.println("GELEN URL>>>" + url);
         try {
 
             Assert.assertEquals(currentUrl, url);
         }
         catch (AssertionError err){
-            System.out.println("Yanlış URL>>>>" + err);
+            Gauge.writeMessage("fault url : " + err);
+
         }
 
     }
@@ -76,7 +74,8 @@ public class LoginTest {
         try {
             Assert.assertEquals(actualNoLoggedMessage, expectedNoLoggedMessage);
         } catch (AssertionError err) {
-            System.out.println("Some one has logged in the system" + err);
+            Gauge.writeMessage("Some one has logged in the system" + err);
+            
         }
     }
 
@@ -102,7 +101,7 @@ public class LoginTest {
 
     @Step("Refresh web page")
     public void refreshWebPage() {
-        System.out.println("REFRESH>>>>>>>>>");
-        driver.navigate().refresh();
+
+       driver.navigate().refresh();
     }
 }
